@@ -2,10 +2,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Button } from "../../components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../../store/store";
-import {
-  deleteCourseRdu,
-  listCoursesFn,
-} from "../../store/slices/courses/listCourse";
+import { listCoursesFn } from "../../store/slices/courses/listCourse";
 import { BASE_API_URL } from "../../constants/base_url";
 import { Pencil, Trash2, Search } from "lucide-react";
 import {
@@ -492,7 +489,7 @@ const AdminCourses = () => {
               <div>
                 <Label
                   htmlFor="course_img"
-                  className="mb-2 block text-gray-700 dark:text-gray-300 font-semibold flex items-center gap-1"
+                  className="mb-2  text-gray-700 dark:text-gray-300 font-semibold flex items-center gap-1"
                 >
                   <FontAwesomeIcon icon={faImage} /> Course Thumbnail
                 </Label>
@@ -508,7 +505,7 @@ const AdminCourses = () => {
               <div>
                 <Label
                   htmlFor="cover_img"
-                  className="mb-2 block text-gray-700 dark:text-gray-300 font-semibold flex items-center gap-1"
+                  className="mb-2  text-gray-700 dark:text-gray-300 font-semibold flex items-center gap-1"
                 >
                   <FontAwesomeIcon icon={faPhotoFilm} /> Cover Image
                 </Label>
@@ -527,7 +524,7 @@ const AdminCourses = () => {
             <div>
               <Label
                 htmlFor="preview_course"
-                className="mb-2 block text-gray-700 dark:text-gray-300 font-semibold flex items-center gap-1"
+                className="mb-2  text-gray-700 dark:text-gray-300 font-semibold flex items-center gap-1"
               >
                 <FontAwesomeIcon icon={faVideo} /> Preview Video (YouTube URL)
               </Label>
@@ -542,7 +539,7 @@ const AdminCourses = () => {
             <div>
               <Label
                 htmlFor="description"
-                className="mb-2 block text-gray-700 dark:text-gray-300 font-semibold flex items-center gap-1"
+                className="mb-2  text-gray-700 dark:text-gray-300 font-semibold flex items-center gap-1"
               >
                 <FontAwesomeIcon icon={faFileLines} /> Description
               </Label>

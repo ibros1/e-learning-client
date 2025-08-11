@@ -1,4 +1,3 @@
-import React from "react";
 import type { Course } from "../../types/course";
 import { BASE_API_URL } from "../../constants/base_url";
 import { useNavigate } from "react-router";

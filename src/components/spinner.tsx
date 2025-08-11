@@ -1,5 +1,3 @@
-import React from "react";
-
 interface SpinnerProps {
   size?: string; // e.g. "w-6 h-6"
   className?: string;

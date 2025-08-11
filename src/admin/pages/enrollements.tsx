@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store";
-import { listEnrollementsFn } from "../../store/slices/enrollments/listENrollements";
+import { listEnrollementsFn } from "../../store/slices/enrollments/listEnrollements";
 
 import {
   BookOpenCheck,

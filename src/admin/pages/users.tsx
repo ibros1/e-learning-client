@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader2, Trash2, Pencil } from "lucide-react";
 import type { AppDispatch, RootState } from "../../store/store";

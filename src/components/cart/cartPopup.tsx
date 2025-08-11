@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";

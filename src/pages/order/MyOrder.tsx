@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   Search,
   Filter,
@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../../store/store";
-import { listEnrollementsFn } from "../../store/slices/enrollments/listENrollements";
+import { listEnrollementsFn } from "../../store/slices/enrollments/listEnrollements";
 import { BASE_API_URL } from "../../constants/base_url";
 
 const getStatusBadge = (status: string) => {

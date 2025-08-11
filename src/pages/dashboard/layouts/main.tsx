@@ -34,7 +34,7 @@ import { Calendar } from "../../../components/ui/calendar";
 
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../store/store";
-import { listEnrollementsFn } from "../../../store/slices/enrollments/listENrollements";
+import { listEnrollementsFn } from "../../../store/slices/enrollments/listEnrollements";
 import { listUsersFn } from "../../../store/slices/auth/user/getAllUsers";
 import { listCoursesFn } from "../../../store/slices/courses/listCourse";
 import { listLessonsFn } from "../../../store/slices/lessons/listLessons";

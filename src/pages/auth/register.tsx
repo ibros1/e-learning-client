@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "../../components/ui/button";
 import logo from "../../../public/logo.png";
 import { useFormik } from "formik";

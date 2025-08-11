@@ -8,7 +8,7 @@ import type { AppDispatch, RootState } from "../../store/store";
 import { ChevronDown, Lock } from "lucide-react";
 
 import EnrolleCourseDetail from "./enrollCourseDetail";
-import { listEnrollementsFn } from "../../store/slices/enrollments/listENrollements";
+import { listEnrollementsFn } from "../../store/slices/enrollments/listEnrollements";
 
 const CourseDetailPage = () => {
   const { courseId } = useParams<{ courseId: string }>();

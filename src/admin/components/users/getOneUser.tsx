@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_API_URL } from "../../../constants/base_url";
 import type { AppDispatch, RootState } from "../../../store/store";
 import { getOneUserFn } from "../../../store/slices/auth/user/getOneUser";
-import { listEnrollementsFn } from "../../../store/slices/enrollments/listENrollements";
+import { listEnrollementsFn } from "../../../store/slices/enrollments/listEnrollements";
 import { listCoursesFn } from "../../../store/slices/courses/listCourse";
 import { Skeleton } from "../../../components/ui/skeleton";
 import { Badge } from "../../../components/ui/badge";

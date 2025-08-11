@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +18,7 @@ import {
 } from "../../../store/slices/enrollments/deleteEnrollement";
 import type { Enrollement } from "../../../types/enrollement";
 import toast from "react-hot-toast";
-import { listEnrollementsFn } from "../../../store/slices/enrollments/listENrollements";
+import { listEnrollementsFn } from "../../../store/slices/enrollments/listEnrollements";
 
 type enrollementProps = {
   enrollement: Enrollement;

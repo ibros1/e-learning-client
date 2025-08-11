@@ -40,7 +40,6 @@ export default function HomePage() {
   const completedLessonsState = useSelector(
     (state: RootState) => state.getCompletedLessonsSlice
   );
-  const progressCourse = completedLessonsState.data?.completed;
 
   useEffect(() => {
     dispatch(listCoursesFn());

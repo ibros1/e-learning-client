@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../../components/ui/button";
 import {
   Dialog,
@@ -20,7 +20,7 @@ import {
 } from "../../../store/slices/enrollments/updateEnrollement";
 import { Switch } from "../../../components/ui/switch";
 import toast from "react-hot-toast";
-import { listEnrollementsFn } from "../../../store/slices/enrollments/listENrollements";
+import { listEnrollementsFn } from "../../../store/slices/enrollments/listEnrollements";
 import { updatePaymentFn } from "../../../store/slices/payments/updatePayment";
 import { listPaymentsFn } from "../../../store/slices/payments/listPayments";
 import { WhoAmiFn } from "../../../store/slices/auth/user/getMe";
