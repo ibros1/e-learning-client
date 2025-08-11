@@ -23,9 +23,9 @@ import type { AppDispatch, RootState } from "../store/store";
 // Images
 import heroImg from "../../public/hero1.png";
 
-const AbdinasirPhoto = "https://randomuser.me/api/portraits/men/32.jpg";
-const KhaalidPhoto = "https://randomuser.me/api/portraits/men/22.jpg";
-const AmiinPhoto = "https://randomuser.me/api/portraits/men/45.jpg";
+import AbdinasirPhoto from "../../public/abdinasir.jpg";
+import KhaalidPhoto from "../../public/khaalid.jpg";
+import AmiinPhoto from "../../public/amiin.jpg";
 
 export default function HomePage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -177,9 +177,9 @@ export default function HomePage() {
   const fmt = (n: number) => n.toLocaleString();
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-[#0B1228] dark:via-[#091025] dark:to-[#050819] dark:text-gray-100 overflow-x-hidden">
+    <div className="w-screen xl:w-full min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-[#0B1228] dark:via-[#091025] dark:to-[#050819] dark:text-gray-100 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16 max-w-7xl">
+      <section className="mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16 ">
         <div className="flex flex-col lg:flex-row gap-6 md:gap-10 items-center">
           <div className="w-full lg:w-1/2 space-y-5 sm:space-y-6">
             <div className="space-y-4">
@@ -304,7 +304,7 @@ export default function HomePage() {
               <img
                 src={heroImg}
                 alt="Learning illustration"
-                className="w-full h-auto rounded-lg shadow-xl max-w-full"
+                className="w-full h-auto rounded-lg  max-w-full"
               />
             </div>
           </div>
@@ -313,7 +313,7 @@ export default function HomePage() {
 
       {/* Continue Learning Section */}
       {enrollments && enrollments.length > 0 && (
-        <section className="mx-auto px-4 sm:px-6 py-8 md:py-12 max-w-7xl">
+        <section className="mx-auto px-4 sm:px-6 py-8 md:py-12 ">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">
             Continue Your Course
           </h2>
@@ -373,7 +373,7 @@ export default function HomePage() {
       )}
 
       {/* Stats Section */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 dark:bg-[#091025] max-w-7xl mx-auto">
+      <section className="py-12 md:py-16 px-4 sm:px-6 dark:bg-[#091025]  mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -462,7 +462,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 bg-gray-50 dark:bg-[#091025] max-w-7xl mx-auto">
+      <section className="py-12 md:py-16 px-4 sm:px-6 bg-gray-50 dark:bg-[#091025]  mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4">
             Explore Our Categories
@@ -576,7 +576,7 @@ export default function HomePage() {
       </section>
 
       {/* Popular Courses */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 dark:bg-[#091025] max-w-7xl mx-auto">
+      <section className="py-12 md:py-16 px-4 sm:px-6 dark:bg-[#091025]  mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-10 gap-4">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold mb-1 md:mb-2">
@@ -693,7 +693,7 @@ export default function HomePage() {
       </section>
 
       {/* Learning Paths */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 bg-gray-50 dark:bg-[#091025] max-w-7xl mx-auto">
+      <section className="py-12 md:py-16 px-4 sm:px-6 bg-gray-50 dark:bg-[#091025]  mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4">
             Structured Learning Paths
@@ -810,7 +810,7 @@ export default function HomePage() {
       </section>
 
       {/* Trusted By Section */}
-      <section className="py-8 px-4 sm:px-6 bg-gray-100 dark:bg-gray-800/50 max-w-7xl mx-auto">
+      <section className="py-8 px-4 sm:px-6 bg-gray-100 dark:bg-gray-800/50  mx-auto">
         <div className="text-center">
           <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 mb-3 md:mb-4">
             Trusted by leading companies worldwide
@@ -831,7 +831,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 bg-white dark:bg-[#091025] max-w-7xl mx-auto">
+      <section className="py-12 md:py-16 px-4 sm:px-6 bg-white dark:bg-[#091025]  mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4">
             What Our Students Say

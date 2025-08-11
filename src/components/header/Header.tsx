@@ -15,10 +15,11 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full shadow-sm border-b px-4 py-3 flex items-center justify-between bg-card bg-white dark:bg-[#091025] dark:text-white">
-        {/* Left Section: Logo and Mobile Menu Button */}
+      {/* Header */}
+      <header className="sticky w-full top-0 z-50  shadow-sm border-b flex items-center justify-between px-2 sm:px-4 py-3 bg-card dark:bg-[#091025] dark:text-white">
+        {/* Left Section: Logo + Menu */}
         <div className="flex items-center gap-4">
-          {/* Mobile menu toggle button */}
+          {/* Mobile Menu Button */}
           <button
             aria-label="Open menu"
             className="xl:hidden text-2xl p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -27,8 +28,8 @@ const Header = () => {
             <span className="bb-icon-bars-2 bb-icon-l" />
           </button>
 
-          {/* Logo */}
-          {!logInState.data?.isSuccess ? (
+          {/* Logo (Desktop) */}
+          {!logInState.data?.isSuccess && (
             <img
               src={logo}
               alt="Logo"
@@ -36,9 +37,9 @@ const Header = () => {
               onClick={() => navigate("/")}
               draggable={false}
             />
-          ) : null}
+          )}
 
-          {/* Mobile and Tablet Logo */}
+          {/* Logo (Mobile & Tablet) */}
           <img
             src={logo}
             alt="Logo"
@@ -64,24 +65,20 @@ const Header = () => {
           </Link>
         </nav>
 
-        {/* Right Section: Icons and Profile */}
+        {/* Right Section */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 text-2xl">
-            {/* Search Icon Button */}
             <button
               aria-label="Search"
               className="bb-icon-search bb-icon-l p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
               type="button"
             />
-            {/* Cart */}
             <CartPopup />
-            {/* Notification Bell */}
             <button
               aria-label="Notifications"
               className="bb-icon-bell bb-icon-l hidden md:inline-flex p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
               type="button"
             />
-            {/* Inbox */}
             <button
               aria-label="Inbox"
               className="bb-icon-inbox bb-icon-l hidden md:inline-flex p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -89,10 +86,10 @@ const Header = () => {
             />
           </div>
 
-          {/* Dark Mode Toggle */}
+          {/* Dark Mode */}
           <ChangeToggle />
 
-          {/* Auth Buttons or Profile */}
+          {/* Auth / Profile */}
           {logInState.data?.isSuccess ? (
             <Profile />
           ) : (
@@ -114,14 +111,14 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Overlay for Sidebar */}
+      {/* Sidebar Overlay */}
       <div
         className={`fixed inset-0 bg-black bg-opacity-40 z-40 transition-opacity duration-300 ${
           isSidebarOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         onClick={() => setSidebarOpen(false)}
         aria-hidden={!isSidebarOpen}
-      ></div>
+      />
 
       {/* Mobile Sidebar */}
       <aside
