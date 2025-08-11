@@ -21,8 +21,8 @@ import { BASE_API_URL } from "../constants/base_url";
 import type { AppDispatch, RootState } from "../store/store";
 
 // Images
-const heroImg =
-  "https://images.unsplash.com/photo-1533750349088-cd871a92f312?q=80&w=1000";
+import heroImg from "../../public/hero1.png";
+
 const AbdinasirPhoto = "https://randomuser.me/api/portraits/men/32.jpg";
 const KhaalidPhoto = "https://randomuser.me/api/portraits/men/22.jpg";
 const AmiinPhoto = "https://randomuser.me/api/portraits/men/45.jpg";
