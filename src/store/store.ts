@@ -17,7 +17,7 @@ import { deleteLessonSlice } from "./slices/lessons/deleteLesson";
 import { getOneCourseSlice } from "./slices/courses/getOneCourse";
 import { cartReducer } from "./slices/cart/cart";
 import { createEnrollementSlice } from "./slices/enrollments/createEnrollment";
-import { listEnrollementsSlice } from "./slices/enrollments/listENrollements";
+import { listEnrollementsSlice } from "./slices/enrollments/listEnrollements";
 import { updateEnrollementSlice } from "./slices/enrollments/updateEnrollement";
 import { deleteEnrollementSlice } from "./slices/enrollments/deleteEnrollement";
 import { listUsersSlice } from "./slices/auth/user/getAllUsers";
