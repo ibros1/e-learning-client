@@ -32,7 +32,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 
   return (
     <div
-      className="bg-white h-full dark:bg-[#091025] border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden cursor-pointer"
+      className="bg-white  h-full dark:bg-[#091025] border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden cursor-pointer"
       onClick={handleNavigate}
       role="button"
       tabIndex={0}

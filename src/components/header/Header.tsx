@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <>
       {/* Header */}
-      <header className="sticky w-full top-0 z-50  shadow-sm border-b flex items-center justify-between px-2 sm:px-4 py-3 bg-card dark:bg-[#091025] dark:text-white">
+      <header className="sticky w-full top-0 z-50  shadow-sm border-b flex items-center justify-between px-4 sm:px-4 py-3 bg-card dark:bg-[#091025] dark:text-white">
         {/* Left Section: Logo + Menu */}
         <div className="flex items-center gap-4">
           {/* Mobile Menu Button */}

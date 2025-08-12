@@ -99,19 +99,27 @@ const ContinueCourse = () => {
     );
   }, [sortedLessons, currentLessonId]);
 
-  // Plyr video source config
+  // Update your Plyr source configuration
   const source: SourceInfo = useMemo(() => {
     const url = currentLesson?.video_url || "";
+    const youtubeId = getYouTubeId(url);
 
-    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+    if (youtubeId) {
       return {
         type: "video",
         sources: [
           {
-            src: `https://www.youtube.com/watch?v=${getYouTubeId(url)}`,
+            src: youtubeId,
             provider: "youtube",
           },
         ],
+        youtube: {
+          noCookie: true, // Use youtube-nocookie.com
+          rel: 0, // Don't show related videos at the end
+          showinfo: 0, // Hide video info
+          iv_load_policy: 3, // Hide annotations
+          modestbranding: 1, // Hide YouTube logo
+        },
       };
     } else {
       return {
@@ -125,6 +133,20 @@ const ContinueCourse = () => {
       };
     }
   }, [currentLesson?.video_url]);
+
+  // Then in your JSX, add the YouTube provider option:
+  <Plyr
+    source={source}
+    options={{
+      youtube: {
+        noCookie: true,
+        rel: 0,
+        showinfo: 0,
+        iv_load_policy: 3,
+        modestbranding: 1,
+      },
+    }}
+  />;
 
   // Group chapters with their lessons sorted
   const chaptersWithLessons = useMemo(() => {

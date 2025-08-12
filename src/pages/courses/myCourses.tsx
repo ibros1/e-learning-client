@@ -125,32 +125,56 @@ const MyCourses: React.FC = () => {
           )}
 
           {/* Enrolled courses grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
+          <div
+            className="
+  grid 
+  grid-cols-1 
+  xs:grid-cols-2
+  sm:grid-cols-2 
+  md:grid-cols-3 
+  lg:grid-cols-3 
+  xl:grid-cols-4 
+  gap-4 sm:gap-6 
+  mt-6
+"
+          >
             {enrolledCourses
               ?.filter((enroll) => enroll.is_enrolled)
               .map((enrll) => {
                 return (
                   <div
                     key={enrll.course.id}
-                    className="group bg-white dark:bg-[#0d1324] h-[500px] rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-pointer"
+                    className="
+            group 
+            bg-white dark:bg-[#0d1324] 
+            h-auto sm:h-[500px] 
+            rounded-2xl 
+            border border-gray-200 dark:border-gray-700 
+            shadow-sm 
+            hover:shadow-lg 
+            hover:-translate-y-1 
+            transition-all duration-300 
+            overflow-hidden 
+            cursor-pointer
+          "
                     onClick={() =>
                       navigate(`/my-courses/continue/${enrll.courseId}`)
                     }
                   >
-                    <div className="relative h-[200px] w-full">
+                    {/* Image */}
+                    <div className="relative h-[180px] sm:h-[200px] w-full">
                       <img
                         src={`${BASE_API_URL}/uploads/${enrll.course.course_img}`}
                         alt={enrll.course.title}
                         className="object-cover h-full w-full"
                       />
-                      <span
-                        className={`absolute top-3 left-3 px-3 py-1 bg-blue-600 rounded-xl text-xs font-semibold text-white shadow `}
-                      >
+                      <span className="absolute top-3 left-3 px-3 py-1 bg-blue-600 rounded-xl text-xs font-semibold text-white shadow">
                         Continue Course
                       </span>
                     </div>
 
-                    <div className="p-5 flex flex-col h-[300px] justify-between">
+                    {/* Content */}
+                    <div className="p-4 sm:p-5 flex flex-col h-full justify-between">
                       <div>
                         <p className="text-sm text-gray-400 dark:text-gray-500 mb-1">
                           {enrll.course.chapters?.length || 0} Chapter
@@ -165,7 +189,8 @@ const MyCourses: React.FC = () => {
                             : enrll.course.description}
                         </div>
 
-                        <div className="pt-6">
+                        {/* Progress */}
+                        <div className="pt-4">
                           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
                             <img
                               src={`${BASE_API_URL}/uploads/${user.profilePhoto}`}
@@ -176,7 +201,7 @@ const MyCourses: React.FC = () => {
                           </div>
                           <div className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
                             <div
-                              className="h-full bg-blue-600 transition-all duration-300"
+                              className="bg-blue-600 transition-all duration-300"
                               style={{
                                 width: `${getCourseProgress(
                                   enrll.courseId.toString()
@@ -187,8 +212,9 @@ const MyCourses: React.FC = () => {
                         </div>
                       </div>
 
+                      {/* Button */}
                       <Button
-                        className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md transition duration-300"
+                        className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md transition duration-300"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigate(`/my-courses/continue/${enrll.course.id}`);

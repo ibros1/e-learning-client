@@ -20,12 +20,12 @@ const CoursesPage = () => {
   );
 
   return (
-    <div className="p-6 bg-white dark:bg-[#091025] transition-colors duration-300">
-      <div className="px-8 py-8">
+    <div className=" bg-white w-screen xl:w-full dark:bg-[#091025] transition-colors duration-300">
+      <div className="px-4 py-4 xl:px-8 xl:py-8">
         {/* Heading and Filters */}
         <div className="">
-          <div className="flex justify-between w-full">
-            <div className="flex flex-col gap-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-8">
+            <div className="">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
                 Courses
               </h1>
@@ -70,7 +70,7 @@ const CoursesPage = () => {
         </div>
 
         {/* Course Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4  gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4  gap-6">
           {filteredCourses.map((course) => (
             <CourseCard key={course.id} course={course}></CourseCard>
           ))}
