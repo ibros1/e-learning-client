@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ChangeToggle } from "../darkMode";
 import logo from "../../../public/logo.png";
 import { useSelector } from "react-redux";
@@ -12,7 +12,12 @@ const Header = () => {
   const logInState = useSelector((state: RootState) => state.loginSlice);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ React Router location object
 
+  const path = location.pathname.replace(/\/+$/, "");
+  const isMyCoursesPage = path.startsWith("/my-courses");
+
+  // normalize trailing slash
   return (
     <>
       {/* Header */}
@@ -28,8 +33,8 @@ const Header = () => {
             <span className="bb-icon-bars-2 bb-icon-l" />
           </button>
 
-          {/* Logo (Desktop) */}
-          {!logInState.data?.isSuccess && (
+          {/* Desktop logo: show if not logged in OR if on /my-courses */}
+          {(isMyCoursesPage || !logInState.data?.isSuccess) && (
             <img
               src={logo}
               alt="Logo"

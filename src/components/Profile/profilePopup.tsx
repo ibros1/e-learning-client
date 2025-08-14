@@ -42,25 +42,21 @@ const Profile = () => {
       linkTitle: "Profile",
       to: "/my-profile",
     },
-    {
-      icon: "bb-icon-l bb-icon-cog",
-      linkTitle: "Account",
-      to: "/my-settings",
-    },
+
     {
       icon: "bb-icon-l bb-icon-graduation-cap",
       linkTitle: "Courses",
       to: "/courses",
     },
     {
-      icon: "bb-icon-l bb-icon-trending-up",
-      linkTitle: "Learning Paths",
-      to: "/learning-paths",
+      icon: "bb-icon-l bb-icon-checkbox",
+      linkTitle: "orders",
+      to: "/my-orders",
     },
     {
-      icon: "bb-icon-l bb-icon-clock",
-      linkTitle: "Timeline",
-      to: "/timeline",
+      icon: "bb-icon-l bb-icon-cog",
+      linkTitle: "Account",
+      to: "/my-settings",
     },
   ];
 

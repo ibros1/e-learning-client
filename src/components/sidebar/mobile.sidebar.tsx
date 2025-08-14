@@ -21,7 +21,7 @@ const MobileSidebar = ({ onClose }: Props) => {
 
   const isLoggedIn = userState.data?.isSuccess;
 
-  let links = [
+  const links = [
     {
       label: "Home",
       to: "/",
@@ -43,7 +43,9 @@ const MobileSidebar = ({ onClose }: Props) => {
   ];
 
   if (isLoggedIn) {
-    links = links.concat([
+    links.splice(
+      1,
+      1,
       {
         label: "My Profile",
         to: "/my-profile",
@@ -61,8 +63,8 @@ const MobileSidebar = ({ onClose }: Props) => {
         to: "/certificates",
         iconClass: "bb-icon-certificate",
         filledIconClass: "bb-icon-certificate bb-icon-f",
-      },
-    ]);
+      }
+    );
   }
 
   if (user?.role === "ADMIN") {

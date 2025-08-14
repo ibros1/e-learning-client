@@ -142,19 +142,19 @@ const CourseDetailPage = () => {
       <div className="relative w-full overflow-hidden">
         {/* Course Cover Image */}
         {course.course_img && (
-          <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 z-0 w-full h-[500px]">
             <img
-              src={`${BASE_API_URL}/uploads/${course.course_img}`}
+              src={`${BASE_API_URL}/uploads/${course.cover_img}`}
               alt={course.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-indigo-900/30" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
           </div>
         )}
 
         <div className="container mx-auto px-4 lg:px-8 py-16 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-            <div className="max-w-3xl">
+            <div className="max-w-3xl text-white">
               <div className="inline-flex items-center gap-3 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-full text-sm mb-5 shadow-sm border border-blue-100 dark:border-gray-700">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
@@ -173,7 +173,7 @@ const CourseDetailPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white leading-tight mb-4"
+                className="text-3xl md:text-4xl font-bold text-white dark:text-white leading-tight mb-4"
               >
                 {course.title}
               </motion.h1>
@@ -182,7 +182,7 @@ const CourseDetailPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mb-8"
+                className="text-lg text-white dark:text-gray-300 max-w-3xl mb-8"
               >
                 {course.description}
               </motion.p>
@@ -215,6 +215,13 @@ const CourseDetailPage = () => {
               className="w-full md:w-auto"
             >
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden w-full md:w-80">
+                <div className=" h-[150px]">
+                  <img
+                    src={`${BASE_API_URL}/uploads/${course.course_img}`}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <div className="p-6">
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -229,7 +236,7 @@ const CourseDetailPage = () => {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
+                      className="w-full bg-blue-600 rounded-md text-white px-6 py-3  font-medium hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
                       onClick={() =>
                         navigate(`/my-courses/continue/${course.id}`)
                       }
@@ -295,6 +302,44 @@ const CourseDetailPage = () => {
         <div className="grid grid-cols-1 gap-8">
           {/* Main Content */}
           <div className="space-y-8">
+            {/* Course Features */}
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-8">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+                Course Features
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                    12.5 hours
+                  </div>
+                  <div className="text-gray-600 dark:text-gray-400">
+                    Duration
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                    Seasons
+                  </div>
+                  <div className="text-gray-600 dark:text-gray-400">
+                    Lessons
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                    Information
+                  </div>
+                  <div className="text-gray-600 dark:text-gray-400">Level</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                    Yes
+                  </div>
+                  <div className="text-gray-600 dark:text-gray-400">
+                    Certificate
+                  </div>
+                </div>
+              </div>
+            </div>
             {/* Course Tabs */}
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="border-b border-gray-200 dark:border-gray-700">
@@ -315,22 +360,7 @@ const CourseDetailPage = () => {
                       />
                     )}
                   </button>
-                  <button
-                    onClick={() => setActiveTab("description")}
-                    className={`px-6 py-4 font-medium text-sm transition-all relative flex-shrink-0 ${
-                      activeTab === "description"
-                        ? "text-blue-600 dark:text-blue-400"
-                        : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-                    }`}
-                  >
-                    Description
-                    {activeTab === "description" && (
-                      <motion.div
-                        className="absolute bottom-0 left-0 right-0 h-1 bg-blue-600 dark:bg-blue-500"
-                        layoutId="tabIndicator"
-                      />
-                    )}
-                  </button>
+
                   <button
                     onClick={() => setActiveTab("instructor")}
                     className={`px-6 py-4 font-medium text-sm transition-all relative flex-shrink-0 ${
@@ -613,7 +643,7 @@ const CourseDetailPage = () => {
                               <img
                                 src={
                                   course.users.profilePhoto
-                                    ? `${BASE_API_URL}/uploads/${course.users.profilePhoto}`
+                                    ? `${BASE_API_URL}/uploads/${course.users.coverPhoto}`
                                     : "/default-avatar.png"
                                 }
                                 alt={course.users.full_name}
@@ -663,45 +693,6 @@ const CourseDetailPage = () => {
                     )}
                   </motion.div>
                 </AnimatePresence>
-              </div>
-            </div>
-
-            {/* Course Features */}
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-8">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-                Course Features
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                    12.5 hours
-                  </div>
-                  <div className="text-gray-600 dark:text-gray-400">
-                    Duration
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                    Seasons
-                  </div>
-                  <div className="text-gray-600 dark:text-gray-400">
-                    Lessons
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                    Information
-                  </div>
-                  <div className="text-gray-600 dark:text-gray-400">Level</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                    Yes
-                  </div>
-                  <div className="text-gray-600 dark:text-gray-400">
-                    Certificate
-                  </div>
-                </div>
               </div>
             </div>
           </div>

@@ -1,18 +1,18 @@
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import type { RootState } from "../../store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
 // import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ProfilePopupLinks from "./profilePopupLinks";
-import { resetLoginState } from "../../store/slices/auth/login";
+
 import { BASE_API_URL } from "../../constants/base_url";
 import { useNavigate } from "react-router";
 
 const Profile = () => {
   const navigate = useNavigate();
   const userState = useSelector((state: RootState) => state.WhoAmiSlice);
-  const dispatch = useDispatch();
+
   const user = userState.data?.user;
   const fullName = user?.full_name || "Guest";
   const firstName = fullName.split(" ")[0];
@@ -22,8 +22,7 @@ const Profile = () => {
     : "";
 
   const logoutHandler = () => {
-    dispatch(resetLoginState());
-    navigate(`/login`);
+    navigate(`/`);
   };
 
   const links = [
@@ -50,16 +49,6 @@ const Profile = () => {
       icon: "bb-icon-l bb-icon-graduation-cap",
       linkTitle: "Courses",
       to: "/courses",
-    },
-    {
-      icon: "bb-icon-l bb-icon-trending-up",
-      linkTitle: "Learning Paths",
-      to: "/learning-paths",
-    },
-    {
-      icon: "bb-icon-l bb-icon-clock",
-      linkTitle: "Timeline",
-      to: "/timeline",
     },
   ];
 

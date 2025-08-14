@@ -28,6 +28,8 @@ import GetOneUser from "./admin/components/users/getOneUser";
 import Contact from "./pages/contact";
 import { Payments } from "./admin/pages/payments";
 import ProtectedAdminRoute from "./admin/components/protectedAdmin/ProtectedAdminRoute";
+import Logout from "./pages/logout";
+import MyCertificates from "./pages/myCertificates";
 export const mainRoter = createBrowserRouter([
   {
     path: "/",
@@ -41,7 +43,10 @@ export const mainRoter = createBrowserRouter([
       { path: "/courses/:courseId", element: <CourseDetailPage /> },
       { path: "/checkout", element: <CheckoutPage /> },
       { path: "/checkout/confirm", element: <SuccessPayment /> },
-
+      {
+        path: "/logout",
+        element: <Logout />,
+      },
       {
         path: "/my-courses/continue/:courseId",
         element: <ContinueCourse />,
@@ -57,7 +62,7 @@ export const mainRoter = createBrowserRouter([
       { path: "my-settings", element: <Settings /> },
       { path: "my-profile", element: <MyProfile /> },
       { path: "/members", element: <MembersPage /> },
-      { path: "certificates", element: <h2>My Certificates</h2> },
+      { path: "certificates", element: <MyCertificates /> },
       { path: "diploma", element: <h2>Diploma</h2> },
       { path: "downloads", element: <h2>Downloads</h2> },
       {
