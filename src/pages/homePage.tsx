@@ -17,7 +17,7 @@ import {
 
 import { listCoursesFn } from "../store/slices/courses/listCourse";
 import { getCompletedLessonsFn } from "../store/lessonProggress/getCompletedProggress";
-import { BASE_API_URL } from "../constants/base_url";
+
 import type { AppDispatch, RootState } from "../store/store";
 
 // Images
@@ -339,13 +339,15 @@ export default function HomePage() {
                 >
                   <div className="flex items-center gap-4 w-full sm:w-auto mb-4 sm:mb-0">
                     <img
-                      src={`${BASE_API_URL}/uploads/${c.course.course_img}`}
+                      src={`${c.course.course_img}`}
                       alt={c.course.title || "Course"}
                       className="w-16 h-12 sm:w-20 sm:h-14 rounded-lg object-cover shadow-md flex-shrink-0"
                     />
                     <div className="min-w-0 flex-1 sm:flex-none">
-                      <h4 className="text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100 truncate">
-                        {c.course.title || "Untitled Course"}
+                      <h4 className="text-base sm:text-lg truncate font-medium text-gray-900 dark:text-gray-100 ">
+                        {c.course.title.length > 50
+                          ? c.course.title.slice(0, 50) + "...."
+                          : c.course.title || "Untitled Course"}
                       </h4>
                       <div className="mt-1 sm:mt-2 bg-gray-200 dark:bg-gray-700 rounded-full h-2 sm:h-3 w-full overflow-hidden">
                         <div

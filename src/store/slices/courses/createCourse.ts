@@ -27,7 +27,7 @@ export const createCourseFn = createAsyncThunk(
           },
         }
       );
-
+      console.log(response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -43,7 +43,13 @@ export const createCourseFn = createAsyncThunk(
 export const createCourseSlice = createSlice({
   name: "Create Course Slice",
   initialState,
-  reducers: {},
+  reducers: {
+    resetCreateCourseState: (state) => {
+      state.data = {} as iCreatedCourseResponse;
+      state.loading = false;
+      state.error = "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createCourseFn.pending, (state) => {
       state.loading = true;
@@ -62,3 +68,5 @@ export const createCourseSlice = createSlice({
     });
   },
 });
+
+export const { resetCreateCourseState } = createCourseSlice.actions;

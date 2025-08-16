@@ -13,7 +13,7 @@ import CreateLessonDailog from "../components/lessons/createLessonDailog";
 import { Button } from "../../components/ui/button";
 import { type AppDispatch, type RootState } from "../../store/store";
 import { listLessonsFn } from "../../store/slices/lessons/listLessons";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import { listChaptersFn } from "../../store/slices/chapters/listChapters";
 import {
   Dialog,
@@ -257,7 +257,7 @@ const Lessons = () => {
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="flex items-center gap-2">
                     <img
-                      src={`${BASE_API_URL}/uploads/${lesson.users.profilePhoto}`}
+                      src={`${lesson.users.profilePhoto}`}
                       alt={lesson.users.full_name}
                       className="w-8 h-8 rounded-full object-cover border"
                     />

@@ -23,11 +23,11 @@ const SettingsPage: React.FC = () => {
         {/* Sidebar */}
         <aside
           className="bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-200 dark:border-gray-700 p-6 flex flex-col items-center md:sticky md:top-20 md:h-fit cursor-pointer md:w-80 hover:shadow-lg transition-shadow"
-          onClick={() => navigate("/my-account")}
+          onClick={() => navigate("/my-profile")}
           role="button"
           tabIndex={0}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") navigate("/my-account");
+            if (e.key === "Enter" || e.key === " ") navigate("/my-profile");
           }}
         >
           {/* Cover Image */}

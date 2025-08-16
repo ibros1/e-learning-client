@@ -7,7 +7,7 @@ import {
   AvatarImage,
 } from "../../../components/ui/avatar";
 import logo from "../../../../public/logo.png";
-import { BASE_API_URL } from "../../../constants/base_url";
+
 import { FaCheckCircle } from "react-icons/fa";
 
 interface Props {
@@ -19,9 +19,7 @@ const MobileAdminSideBar = ({ onClose }: Props) => {
   const user = loginState.data?.user;
   const fullName = user?.full_name || "Guest User";
   const username = user?.username || "guest";
-  const profilePhoto = user?.profilePhoto
-    ? `${BASE_API_URL}/uploads/${user.profilePhoto}`
-    : "";
+  const profilePhoto = user?.profilePhoto ? `${user.profilePhoto}` : "";
 
   // const isLoggedIn = loginState.data?.isSuccess;
 

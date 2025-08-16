@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../../store/store";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -186,7 +186,7 @@ export default function CheckoutPage() {
             className="border rounded-xl p-4 bg-gray-50 dark:bg-gray-800 flex gap-4 items-start"
           >
             <img
-              src={`${BASE_API_URL}/uploads/${course.course_img}`}
+              src={`${course.course_img}`}
               alt={course.title}
               className="w-24 h-20 object-cover rounded-xl"
             />

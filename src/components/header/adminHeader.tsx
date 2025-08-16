@@ -37,7 +37,7 @@ const AdminHeader = () => {
         {/* Center - Admin-only Navigation */}
         <nav className="hidden xl:flex gap-6 font-medium text-gray-700 text-base dark:text-gray-300">
           <button
-            onClick={() => navigate("/dashboard/users")}
+            onClick={() => navigate("/dashboard/students")}
             className="hover:text-blue-600 transition"
           >
             Manage Users

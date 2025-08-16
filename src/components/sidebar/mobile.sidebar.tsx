@@ -26,7 +26,7 @@ const MobileSidebar = ({ onClose }: Props) => {
       filledIconClass: "bb-icon-home bb-icon-f",
     },
     {
-      label: "Courses",
+      label: "All Courses",
       to: "/courses",
       iconClass: "bb-icon-books",
       filledIconClass: "bb-icon-books bb-icon-f",
@@ -41,8 +41,8 @@ const MobileSidebar = ({ onClose }: Props) => {
 
   if (isLoggedIn) {
     links.splice(
-      1,
-      1,
+      2,
+      0,
       {
         label: "My Profile",
         to: "/my-profile",
@@ -60,6 +60,19 @@ const MobileSidebar = ({ onClose }: Props) => {
         to: "/certificates",
         iconClass: "bb-icon-certificate",
         filledIconClass: "bb-icon-certificate bb-icon-f",
+      },
+      {
+        label: "My Orders",
+        to: "/my-orders",
+        iconClass: "bb-icon-checkbox",
+        filledIconClass: "bb-icon-checkbox bb-icon-f",
+      },
+
+      {
+        label: "Members",
+        to: "/members",
+        iconClass: "bb-icon-users",
+        filledIconClass: "bb-icon-users bb-icon-f",
       }
     );
   }

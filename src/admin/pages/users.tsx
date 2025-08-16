@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Loader2, Trash2, Pencil } from "lucide-react";
+import {
+  Loader2,
+  Trash2,
+  Pencil,
+  Users,
+  UserCheck,
+  GraduationCap,
+  BookUser,
+  Shield,
+} from "lucide-react";
 import type { AppDispatch, RootState } from "../../store/store";
 import { listUsersFn_admins } from "../../store/slices/auth/user/getAllUsersAsAdmin";
 import { Button } from "../../components/ui/button";
@@ -13,7 +22,6 @@ import {
   DialogClose,
 } from "../../components/ui/dialog";
 import { Input } from "../../components/ui/input";
-import { BASE_API_URL } from "../../constants/base_url";
 import { useNavigate } from "react-router";
 import { Label } from "../../components/ui/label";
 import {
@@ -52,9 +60,6 @@ const UsersAdmins = () => {
   const navigate = useNavigate();
   const [isEditUserDailogOpen, setIsEditDialogUserOpen] = useState(false);
 
-  // const singleUserState = useSelector(
-  //   (state: RootState) => state.getOneUserSLice
-  // );
   const updateState = useSelector((state: RootState) => state.updateUserSlice);
   const updateRoleState = useSelector(
     (state: RootState) => state.updateRoleSlice
@@ -80,6 +85,16 @@ const UsersAdmins = () => {
     updated_at: string;
   } | null>(null);
   const user = selectedUser;
+
+  // Calculate summary statistics
+  const totalUsers = users.length;
+  const activeUsers = users.filter((user) => user.is_active).length;
+  const totalStudents = users.filter((user) => user.role === "STUDENT").length;
+  const totalInstructors = users.filter(
+    (user) => user.role === "INSTRUCTOR"
+  ).length;
+  const totalAdmins = users.filter((user) => user.role === "ADMIN").length;
+
   useEffect(() => {
     if (selectedUser) {
       setFullname(selectedUser.full_name);
@@ -104,7 +119,6 @@ const UsersAdmins = () => {
     }
 
     try {
-      // First, update the user details
       const updateUserAction = await dispatch(
         updateUserFn({
           id: user.id,
@@ -120,7 +134,6 @@ const UsersAdmins = () => {
       const updatedUser = updateUserAction.payload;
 
       if (updateUserFn.fulfilled.match(updateUserAction)) {
-        // Second, update role only if user update succeeded
         const updateRoleAction = await dispatch(
           updateRoleFn({
             email: email,
@@ -132,10 +145,9 @@ const UsersAdmins = () => {
           toast.success("User updated successfully!");
           const loggedInUserId = updateState?.data?.user?.id;
           if (updatedUser.id === loggedInUserId) {
-            dispatch(updateUserInLogin(updatedUser)); // ✅ Sync localStorage
+            dispatch(updateUserInLogin(updatedUser));
           }
-          setIsEditDialogUserOpen(false); // ✅ close dialog
-
+          setIsEditDialogUserOpen(false);
           dispatch(listUsersFn_admins());
         } else {
           toast.error("Failed to update user role.");
@@ -148,6 +160,7 @@ const UsersAdmins = () => {
       toast.error("Something went wrong.");
     }
   };
+
   const [isDeletedDailogOpen, setIsDeletedDailogOpen] = useState(false);
   const deleteHandler = (userId: number) => {
     dispatch(deleteUserFn(userId));
@@ -160,16 +173,105 @@ const UsersAdmins = () => {
       return;
     }
     if (deleteState.data.isSuccess) {
-      toast.success("Successfully deleted!");
+      toast.success("User deleted successfully!");
       dispatch(listUsersFn_admins());
       dispatch(resetDeleteUserState());
     }
   }, [deleteState, dispatch]);
+
   return (
     <div className="p-6 dark:bg-[#091025] min-h-screen transition-colors duration-300">
       <h2 className="text-3xl font-bold mb-6 tracking-tight dark:text-white">
-        All Members
+        User Management
       </h2>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        {/* Total Users Card */}
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center">
+            <div className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 p-3 rounded-full mr-4">
+              <Users className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {totalUsers}
+              </div>
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Total Users
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Active Users Card */}
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center">
+            <div className="bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 p-3 rounded-full mr-4">
+              <UserCheck className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {activeUsers}
+              </div>
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Active Users
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Students Card */}
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center">
+            <div className="bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 p-3 rounded-full mr-4">
+              <GraduationCap className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {totalStudents}
+              </div>
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Students
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Instructors Card */}
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center">
+            <div className="bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300 p-3 rounded-full mr-4">
+              <BookUser className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {totalInstructors}
+              </div>
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Instructors
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Admins Card */}
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center">
+            <div className="bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300 p-3 rounded-full mr-4">
+              <Shield className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {totalAdmins}
+              </div>
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Administrators
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {userState.loading ? (
         <div className="flex justify-center items-center min-h-[200px]">
@@ -188,11 +290,10 @@ const UsersAdmins = () => {
                 <th className="px-6 py-3 text-left">User</th>
                 <th className="px-4 py-3">Username</th>
                 <th className="px-4 py-3">Phone</th>
-                <th className="px-4 py-3">Sex</th>
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Role</th>
                 <th className="px-4 py-3">Enrollments</th>
-                <th className="px-4 py-3">Courses_Created</th>
+                <th className="px-4 py-3">Courses Created</th>
                 <th className="px-4 py-3">Created</th>
                 <th className="px-4 py-3">Updated</th>
                 <th className="px-4 py-3">Status</th>
@@ -243,10 +344,7 @@ const UsersAdmins = () => {
                       </td>
                       <td className="px-4 py-2 truncate">@{user.username}</td>
                       <td className="px-4 py-2 text-center">
-                        {user.phone_number}
-                      </td>
-                      <td className="px-4 py-2 text-center capitalize">
-                        {user.sex || "-"}
+                        {user.phone_number || "-"}
                       </td>
                       <td className="px-6 py-2 max-w-full truncate text-blue-700 dark:text-blue-400">
                         <div className="flex gap-2 ">
@@ -262,6 +360,8 @@ const UsersAdmins = () => {
                           className={`px-2 py-1 rounded-full text-xs font-semibold ${
                             user.role === "ADMIN"
                               ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                              : user.role === "INSTRUCTOR"
+                              ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300"
                               : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
                           }`}
                         >
@@ -350,15 +450,14 @@ const UsersAdmins = () => {
         open={isEditUserDailogOpen}
         onOpenChange={setIsEditDialogUserOpen}
       >
-        <DialogContent className="sm:max-w-[98vw] md:max-w-[650px] lg:max-w-[800px] h-[80%] overflow-auto scrollbar-hide rounded-2xl xl:max-w-[900px] bg-white dark:bg-neutral-900 shadow-xl border border-gray-200 dark:border-neutral-800 transition-colors duration-300">
+        <DialogContent className="sm:max-w-[98vw] md:max-w-[650px] lg:max-w-[800px] max-h-[90vh] overflow-auto rounded-2xl xl:max-w-[900px] bg-white dark:bg-neutral-900 shadow-xl border border-gray-200 dark:border-neutral-800 transition-colors duration-300">
           <form onSubmit={updateUserHandler}>
             <DialogHeader>
               <DialogTitle className="text-2xl font-extrabold dark:text-white tracking-tight">
-                Edit Profile
+                Edit User Profile
               </DialogTitle>
               <DialogDescription className="text-base text-gray-600 dark:text-gray-300">
-                Update your profile details below. Make sure everything is
-                correct!
+                Update user details below
               </DialogDescription>
             </DialogHeader>
 
@@ -370,7 +469,7 @@ const UsersAdmins = () => {
                     profilePhoto
                       ? URL.createObjectURL(profilePhoto)
                       : user?.profilePhoto
-                      ? `${BASE_API_URL}/uploads/${user.profilePhoto}`
+                      ? `${user.profilePhoto}`
                       : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                           user?.full_name || ""
                         )}&background=fff&color=222`
@@ -397,7 +496,7 @@ const UsersAdmins = () => {
                 </Label>
                 <Input
                   id="name"
-                  defaultValue={user?.full_name}
+                  value={fullName}
                   onChange={(e) => setFullname(e.target.value)}
                   className="dark:bg-neutral-800 dark:text-white bg-white text-gray-800 border-gray-200 focus:border-gray-400"
                   required
@@ -409,7 +508,7 @@ const UsersAdmins = () => {
                 </Label>
                 <Input
                   id="Username"
-                  defaultValue={user?.username}
+                  value={userName}
                   onChange={(e) => setUsername(e.target.value)}
                   className="dark:bg-neutral-800 dark:text-white bg-white text-gray-800 border-gray-200 focus:border-gray-400"
                   required
@@ -421,7 +520,7 @@ const UsersAdmins = () => {
                 </Label>
                 <Input
                   id="email"
-                  defaultValue={user?.email}
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="dark:bg-neutral-800 dark:text-white bg-white text-gray-800 border-gray-200 focus:border-gray-400"
                   required
@@ -435,7 +534,8 @@ const UsersAdmins = () => {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Change password"
+                  placeholder="Change password (optional)"
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="dark:bg-neutral-800 dark:text-white bg-white text-gray-800 border-gray-200 focus:border-gray-400"
                 />
@@ -452,8 +552,8 @@ const UsersAdmins = () => {
                   onChange={(e) => setRole(e.target.value)}
                 >
                   <option value="STUDENT">STUDENT</option>
-                  <option value="ADMIN">ADMIN</option>
                   <option value="INSTRUCTOR">INSTRUCTOR</option>
+                  <option value="ADMIN">ADMIN</option>
                 </select>
               </div>
               <div className="grid gap-2">
@@ -462,7 +562,7 @@ const UsersAdmins = () => {
                 </Label>
                 <Input
                   id="phone"
-                  defaultValue={user?.phone_number}
+                  value={phoneNumber}
                   type="tel"
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   className="dark:bg-neutral-800 dark:text-white bg-white text-gray-800 border-gray-200 focus:border-gray-400"
@@ -530,16 +630,19 @@ const UsersAdmins = () => {
               </div>
             </div>
 
-            <AlertDialogFooter className="flex flex-col lg:flex-row gap-3 mt-6">
+            <div className="flex flex-col lg:flex-row gap-3 mt-6">
               <Button
-                disabled={updateState.loading}
+                disabled={updateState.loading || updateRoleState.loading}
                 type="submit"
-                className=" disabled:bg-gray-500 disabled:cursor-auto disabled:hover:bg-gray-500 bg-slate-900 hover:bg-slate-800 text-white font-semibold shadow-lg w-full lg:w-auto rounded-xl py-2 px-6 transition-all duration-200"
+                className="disabled:bg-gray-500 disabled:cursor-auto disabled:hover:bg-gray-500 bg-slate-900 hover:bg-slate-800 text-white font-semibold shadow-lg w-full lg:w-auto rounded-xl py-2 px-6 transition-all duration-200 flex items-center justify-center gap-2"
               >
                 {updateState.loading || updateRoleState.loading ? (
-                  <Spinner />
+                  <Spinner className="w-4 h-4" />
                 ) : (
-                  "Save Changes"
+                  <>
+                    <Pencil className="w-4 h-4" />
+                    Update User
+                  </>
                 )}
               </Button>
               <DialogClose asChild>
@@ -550,7 +653,7 @@ const UsersAdmins = () => {
                   Cancel
                 </Button>
               </DialogClose>
-            </AlertDialogFooter>
+            </div>
           </form>
         </DialogContent>
       </Dialog>
@@ -562,11 +665,12 @@ const UsersAdmins = () => {
         <AlertDialogContent className="rounded-2xl p-6 shadow-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-xl font-bold text-gray-900 dark:text-white">
-              Are you absolutely sure to delete this lesson?
+              Delete User Confirmation
             </AlertDialogTitle>
             <AlertDialogDescription className="mt-2 text-gray-600 dark:text-gray-400">
-              This action cannot be undone. This will permanently delete the
-              lessons! and remove it from the server.
+              Are you sure you want to permanently delete{" "}
+              <span className="font-semibold">{selectedUser?.full_name}</span>?
+              This action cannot be undone and will remove all user data.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="mt-6 flex justify-end gap-4">
@@ -575,16 +679,16 @@ const UsersAdmins = () => {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={() => {
-                if (user && user.id) {
-                  deleteHandler(+user.id);
-                  setIsDeletedDailogOpen(false);
+                if (selectedUser && selectedUser.id) {
+                  deleteHandler(selectedUser.id);
                 } else {
                   toast.error("No user selected for deletion.");
                 }
               }}
-              className="px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition"
+              className="px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition flex items-center gap-2"
             >
-              Delete
+              <Trash2 className="w-4 h-4" />
+              {deleteState.loading ? <Spinner /> : "Delete User"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

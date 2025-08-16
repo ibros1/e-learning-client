@@ -53,7 +53,7 @@ const Sidebar = () => {
       filledIconClass: "bb-icon-money bb-icon-f",
     },
     {
-      label: "Students",
+      label: "Users",
       to: "/dashboard/students",
       iconClass: "bb-icon-users",
       filledIconClass: "bb-icon-users bb-icon-f",
@@ -75,7 +75,7 @@ const Sidebar = () => {
     },
     {
       label: "Log out",
-      to: "/logout",
+      to: "/",
 
       iconClass: "bb-icon-sign-out",
       filledIconClass: "bb-icon-sign-out bb-icon-f",
