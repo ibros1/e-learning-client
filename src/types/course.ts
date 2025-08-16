@@ -1,4 +1,4 @@
-export interface iCreatedUserResponse {
+export interface iCreatedCourseResponse {
   isSuccess: boolean;
   message: string;
   course: Course;

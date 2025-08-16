@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../../store/store";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import { useNavigate } from "react-router-dom";
 import MyProfileContainer from "../../components/Profile/profileContainer";
 import { Button } from "../../components/ui/button";
@@ -164,7 +164,7 @@ const MyCourses: React.FC = () => {
                     {/* Image */}
                     <div className="relative h-[180px] sm:h-[200px] w-full">
                       <img
-                        src={`${BASE_API_URL}/uploads/${enrll.course.course_img}`}
+                        src={`${enrll.course.course_img}`}
                         alt={enrll.course.title}
                         className="object-cover h-full w-full"
                       />
@@ -193,7 +193,7 @@ const MyCourses: React.FC = () => {
                         <div className="pt-4">
                           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
                             <img
-                              src={`${BASE_API_URL}/uploads/${user.profilePhoto}`}
+                              src={`${user.profilePhoto}`}
                               alt={user.full_name}
                               className="w-7 h-7 rounded-full object-cover border"
                             />

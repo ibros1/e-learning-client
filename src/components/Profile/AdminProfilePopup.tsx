@@ -6,7 +6,6 @@ import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ProfilePopupLinks from "./profilePopupLinks";
 
-import { BASE_API_URL } from "../../constants/base_url";
 import { useNavigate } from "react-router";
 
 const Profile = () => {
@@ -17,9 +16,7 @@ const Profile = () => {
   const fullName = user?.full_name || "Guest";
   const firstName = fullName.split(" ")[0];
   const username = user?.username || "guestuser";
-  const profilePhoto = user?.profilePhoto
-    ? `${BASE_API_URL}/uploads/${user.profilePhoto}`
-    : "";
+  const profilePhoto = user?.profilePhoto ? `${user.profilePhoto}` : "";
 
   const logoutHandler = () => {
     navigate(`/`);

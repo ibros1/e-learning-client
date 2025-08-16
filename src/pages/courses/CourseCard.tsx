@@ -1,5 +1,5 @@
 import type { Course } from "../../types/course";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
@@ -42,7 +42,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
     >
       <div className="relative">
         <img
-          src={`${BASE_API_URL}/uploads/${course.course_img}`}
+          src={`${course.course_img}`}
           alt={course.title}
           className="w-full h-48 object-cover"
         />
@@ -69,7 +69,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 
         <div className="flex items-center gap-2 mb-2">
           <img
-            src={`${BASE_API_URL}/uploads/${course.users.profilePhoto}`}
+            src={`${course.users.profilePhoto}`}
             alt="Instructor"
             className="w-6 h-6 rounded-full object-cover"
           />

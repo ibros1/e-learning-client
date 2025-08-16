@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type {
-  iRegisterUserPayload,
-  iRegisterUserResponse,
-} from "../../../types/user";
+import type { iRegisterUserResponse } from "../../../types/user";
 import axios, { AxiosError } from "axios";
 import { Default_Error_Message } from "../../../constants/default_error";
 import { BASE_API_URL } from "../../../constants/base_url";
@@ -15,23 +12,8 @@ const initialState = {
 
 export const registerUserFn = createAsyncThunk(
   "/auth/register",
-  async (data: iRegisterUserPayload, { rejectWithValue }) => {
+  async (formData: FormData, { rejectWithValue }) => {
     try {
-      const formData = new FormData();
-      formData.append("email", data.email);
-      formData.append("username", data.username);
-      formData.append("fullName", data.fullName);
-      formData.append("phone_number", data.phone_number);
-      formData.append("sex", data.sex);
-      formData.append("password", data.password);
-      formData.append("comfirmPassword", data.comfirmPassword);
-      if (data.profilePhoto) {
-        formData.append("profilePhoto", data.profilePhoto);
-      }
-      if (data.coverPhoto) {
-        formData.append("coverPhoto", data.coverPhoto);
-      }
-
       const response = await axios.post(
         `${BASE_API_URL}/users/create`,
         formData,

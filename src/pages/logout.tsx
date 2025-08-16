@@ -35,7 +35,7 @@ const Logout = () => {
 
         <div className="mt-8 flex gap-4 justify-center">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/")}
             className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
           >
             Cancel

@@ -14,7 +14,7 @@ import {
 import { Input } from "../ui/input";
 
 import defaultCover from "../../../assets/coverPhoto.png";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useEffect, useState, type FormEvent } from "react";
 import {
@@ -24,8 +24,7 @@ import {
 import toast from "react-hot-toast";
 
 import { updateWhoAmiRedu } from "../../store/slices/auth/user/getMe";
-
-const BASE_IMAGE_URL = `${BASE_API_URL}/uploads`;
+import Spinner from "../spinner";
 
 const MyProfileContainer = () => {
   const userState = useSelector((state: RootState) => state.WhoAmiSlice);
@@ -34,7 +33,7 @@ const MyProfileContainer = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const [fullName, setFullname] = useState("");
-  const [userName, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -73,24 +72,37 @@ const MyProfileContainer = () => {
 
   const updateUserHandler = (event: FormEvent) => {
     event.preventDefault();
-
+    const formData = new FormData();
+    formData.append("id", userId.toString());
+    formData.append("email", email);
+    formData.append("username", username);
+    formData.append("fullName", fullName);
+    formData.append("password", password);
+    formData.append("phone_number", phoneNumber);
+    if (profilePhoto) {
+      formData.append("profilePhoto", profilePhoto);
+    }
+    if (coverPhoto) {
+      formData.append("coverPhoto", coverPhoto);
+    }
     if (!password) {
       toast.error("You have to enter a current or new password!!");
       return;
     }
 
-    dispatch(
-      updateUserFn({
-        id: userId!,
-        email,
-        username: userName,
-        fullName,
-        password,
-        phone_number: phoneNumber,
-        ...(profilePhoto && { profilePhoto }),
-        ...(coverPhoto && { coverPhoto }),
-      })
-    );
+    dispatch(updateUserFn(formData));
+    // dispatch(
+    //   updateUserFn({
+    //     id: userId!,
+    //     email,
+    //     username: userName,
+    //     fullName,
+    //     password,
+    //     phone_number: phoneNumber,
+    //     ...(profilePhoto && { profilePhoto }),
+    //     ...(coverPhoto && { coverPhoto }),
+    //   })
+    // );
   };
 
   if (!userState.data.isSuccess || !user) {
@@ -101,13 +113,9 @@ const MyProfileContainer = () => {
     );
   }
 
-  const profileImageUrl = user.profilePhoto
-    ? `${BASE_IMAGE_URL}/${user.profilePhoto}`
-    : "";
+  const profileImageUrl = user.profilePhoto ? `${user.profilePhoto}` : "";
 
-  const coverImageUrl = user.coverPhoto
-    ? `${BASE_IMAGE_URL}/${user.coverPhoto}`
-    : defaultCover;
+  const coverImageUrl = user.coverPhoto ? `${user.coverPhoto}` : defaultCover;
 
   return (
     <div className="bg-white my-4 dark:bg-[#0F172A] rounded-md overflow-hidden shadow-sm mx-auto w-[98%] border dark:border-gray-700">
@@ -169,15 +177,7 @@ const MyProfileContainer = () => {
                 {/* Profile Preview */}
                 <div className="flex flex-col items-center gap-2 mb-4">
                   <img
-                    src={
-                      profilePhoto
-                        ? URL.createObjectURL(profilePhoto)
-                        : user?.profilePhoto
-                        ? `${BASE_API_URL}/uploads/${user.profilePhoto}`
-                        : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                            user?.full_name || ""
-                          )}`
-                    }
+                    src={user.profilePhoto}
                     alt="Profile"
                     className="w-16 h-16 rounded-full border object-cover shadow"
                   />
@@ -185,7 +185,7 @@ const MyProfileContainer = () => {
                     {fullName || user?.full_name}
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400">
-                    @{userName || user?.username}
+                    @{username || user?.username}
                   </span>
                 </div>
 
@@ -203,6 +203,7 @@ const MyProfileContainer = () => {
                     <Input
                       id="Username"
                       defaultValue={user.username}
+                      value={username}
                       onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
@@ -264,10 +265,11 @@ const MyProfileContainer = () => {
 
                 <DialogFooter className="flex flex-col lg:flex gap-2">
                   <Button
+                    disabled={updateState.loading}
                     type="submit"
-                    className="bg-gray-800 hover:bg-gray-700 text-white"
+                    className="disabled:bg-gray-500 disabled:cursor-auto disabled:hover:bg-gray-500 bg-gray-800 hover:bg-gray-700 text-white"
                   >
-                    Save changes
+                    {updateState.loading ? <Spinner /> : "Save Changes"}
                   </Button>
                   <DialogClose asChild>
                     <Button variant="outline">Cancel</Button>

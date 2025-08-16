@@ -30,6 +30,7 @@ import { Payments } from "./admin/pages/payments";
 import ProtectedAdminRoute from "./admin/components/protectedAdmin/ProtectedAdminRoute";
 import Logout from "./pages/logout";
 import MyCertificates from "./pages/myCertificates";
+import Reports from "./admin/pages/reports";
 export const mainRoter = createBrowserRouter([
   {
     path: "/",
@@ -122,8 +123,8 @@ export const mainRoter = createBrowserRouter([
         element: <GetOneUser />,
       },
       {
-        path: "/dashboard/notice",
-        element: <p>Notices</p>,
+        path: "/dashboard/reports",
+        element: <Reports />,
       },
       {
         path: "*",

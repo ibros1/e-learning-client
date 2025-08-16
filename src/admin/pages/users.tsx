@@ -34,6 +34,7 @@ import {
 } from "../../store/slices/auth/user/deleteUser";
 import { AlertDialog } from "@radix-ui/react-alert-dialog";
 import { updateUserInLogin } from "../../store/slices/auth/login";
+import Spinner from "../../components/spinner";
 
 const UsersAdmins = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -55,6 +56,9 @@ const UsersAdmins = () => {
   //   (state: RootState) => state.getOneUserSLice
   // );
   const updateState = useSelector((state: RootState) => state.updateUserSlice);
+  const updateRoleState = useSelector(
+    (state: RootState) => state.updateRoleSlice
+  );
 
   const [fullName, setFullname] = useState("");
   const [userName, setUsername] = useState("");
@@ -219,7 +223,7 @@ const UsersAdmins = () => {
                         <img
                           src={
                             user.profilePhoto
-                              ? `${BASE_API_URL}/uploads/${user.profilePhoto}`
+                              ? `${user.profilePhoto}`
                               : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                                   user.full_name
                                 )}`
@@ -528,10 +532,15 @@ const UsersAdmins = () => {
 
             <AlertDialogFooter className="flex flex-col lg:flex-row gap-3 mt-6">
               <Button
+                disabled={updateState.loading}
                 type="submit"
-                className="bg-gradient-to-r from-white to-gray-200 hover:from-gray-100 hover:to-gray-300 text-gray-800 font-semibold shadow-lg w-full lg:w-auto rounded-xl py-2 px-6 transition-all duration-200"
+                className=" disabled:bg-gray-500 disabled:cursor-auto disabled:hover:bg-gray-500 bg-slate-900 hover:bg-slate-800 text-white font-semibold shadow-lg w-full lg:w-auto rounded-xl py-2 px-6 transition-all duration-200"
               >
-                Save changes
+                {updateState.loading || updateRoleState.loading ? (
+                  <Spinner />
+                ) : (
+                  "Save Changes"
+                )}
               </Button>
               <DialogClose asChild>
                 <Button

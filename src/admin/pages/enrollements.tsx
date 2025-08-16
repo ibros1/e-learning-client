@@ -12,7 +12,7 @@ import {
   BadgeDollarSign,
   CalendarClock,
 } from "lucide-react";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import EditEnrolls from "../components/enrolls/EditEnrolls";
 
 import DeleteEnrolls from "../components/enrolls/deleteEnrolls";
@@ -183,7 +183,7 @@ const Enrollments = () => {
                   </td>
                   <td className="px-6 py-2 flex items-center gap-2 whitespace-nowrap">
                     <img
-                      src={`${BASE_API_URL}/uploads/${enr.users!.profilePhoto}`}
+                      src={`${enr.users!.profilePhoto}`}
                       alt={enr.users!.full_name}
                       className="w-10 h-10 rounded-full object-cover shadow"
                     />

@@ -11,16 +11,24 @@ import {
 } from "../../store/slices/auth/register";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import Spinner from "../../components/spinner";
 const Register = () => {
   const registerState = useSelector((state: RootState) => state.registerSlice);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   useEffect(() => {
     if (registerState.error) {
+      toast.dismiss();
       toast.error(registerState.error);
       return;
     }
+    if (registerState.loading) {
+      toast.dismiss();
+      toast.loading("loading...");
+      return;
+    }
     if (registerState.data.isSuccess) {
+      toast.dismiss();
       toast.success("Registration successful!!");
 
       formik.resetForm();
@@ -29,6 +37,7 @@ const Register = () => {
       return;
     }
   }, [registerState, dispatch, navigate]);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -38,30 +47,39 @@ const Register = () => {
       sex: "",
       password: "",
       comfirmPassword: "",
-      profilePhoto: "",
-      coverPhoto: "",
+      profilePhoto: null as File | null,
+      coverPhoto: null as File | null, // Changed to File | null
     },
     onSubmit: (values) => {
-      const data = {
-        email: values.email,
-        username: values.username,
-        fullName: values.fullName,
-        phone_number: values.phoneNumber,
-        sex: values.sex,
-        password: values.password,
-        comfirmPassword: values.comfirmPassword,
-        profilePhoto: values.profilePhoto, // file
-        coverPhoto: values.coverPhoto, // file
-      };
-      console.log(data);
-      dispatch(registerUserFn(data));
+      const formData = new FormData();
+      formData.append("email", values.email);
+      formData.append("username", values.username);
+      formData.append("fullName", values.fullName);
+      formData.append("phone_number", values.phoneNumber);
+      formData.append("sex", values.sex);
+      formData.append("password", values.password);
+      formData.append("comfirmPassword", values.comfirmPassword);
+      // Append files
+      if (values.profilePhoto) {
+        formData.append("profilePhoto", values.profilePhoto);
+      }
+      if (values.coverPhoto) {
+        formData.append("coverPhoto", values.coverPhoto);
+      }
+
+      dispatch(registerUserFn(formData));
+      console.log(formData);
     },
     validationSchema: yup.object({
       email: yup
         .string()
         .email("Invalid email address")
         .required("Email is required"),
-      username: yup.string().required("Username is required"),
+      username: yup
+        .string()
+        .min(2, "Username must above 2 characters")
+        .max(32, "maximum characters of username is 32")
+        .required("Username is required"),
       fullName: yup.string().required("Full name is required"),
       phoneNumber: yup.string().required("Phone number is required"),
       profilePhoto: yup.mixed().required("Profile photo is required"),
@@ -77,10 +95,14 @@ const Register = () => {
         .required("Confirm Password is required"),
     }),
   });
-
-  if (registerState.loading) {
-    toast.loading("loading...");
-  }
+  // Update file input handlers
+  const handleFileChange =
+    (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.currentTarget.files?.[0];
+      if (file) {
+        formik.setFieldValue(field, file);
+      }
+    };
 
   return (
     <div>
@@ -174,16 +196,7 @@ const Register = () => {
                   type="file"
                   name="profilePhoto"
                   className="border border-gray-300 p-3 w-full rounded-md focus:outline-none dark:bg-[#091025] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                  onChange={async (event) => {
-                    const file = event.currentTarget.files?.[0];
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                      formik.setFieldValue("profilePhoto", reader.result);
-                    };
-                    if (file) {
-                      reader.readAsDataURL(file);
-                    }
-                  }}
+                  onChange={handleFileChange("profilePhoto")}
                 />
                 {formik.touched.profilePhoto && formik.errors.profilePhoto && (
                   <p className="text-red-600 font-bold text-sm mt-1">
@@ -198,16 +211,7 @@ const Register = () => {
                   type="file"
                   name="coverPhoto"
                   className="border border-gray-300 p-3 w-full rounded-md focus:outline-none dark:bg-[#091025] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                  onChange={async (event) => {
-                    const file = event.currentTarget.files?.[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        formik.setFieldValue("coverPhoto", reader.result);
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  }}
+                  onChange={handleFileChange("coverPhoto")}
                 />
                 {formik.touched.coverPhoto && formik.errors.coverPhoto && (
                   <p className="text-red-600 font-bold text-sm mt-1">
@@ -284,10 +288,11 @@ const Register = () => {
 
             {/* Submit Button */}
             <Button
+              disabled={formik.errors && registerState.loading}
               type="submit"
-              className="  bg-blue-600 w-full hover:bg-blue-500 transition duration-300 font-semibold"
+              className=" disabled:bg-gray-500 disabled:cursor-auto  bg-blue-600 w-full hover:bg-blue-500 transition duration-300 font-semibold"
             >
-              Sign Up
+              {registerState.loading ? <Spinner /> : "Sign Up"}
             </Button>
           </form>
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { getOneCourseFn } from "../../store/slices/courses/getOneCourse";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import type { AppDispatch, RootState } from "../../store/store";
 import {
   ChevronDown,
@@ -144,7 +144,7 @@ const CourseDetailPage = () => {
         {course.course_img && (
           <div className="absolute inset-0 z-0 w-full h-[500px]">
             <img
-              src={`${BASE_API_URL}/uploads/${course.cover_img}`}
+              src={`${course.cover_img}`}
               alt={course.title}
               className="w-full h-full object-cover"
             />
@@ -217,7 +217,7 @@ const CourseDetailPage = () => {
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden w-full md:w-80">
                 <div className=" h-[150px]">
                   <img
-                    src={`${BASE_API_URL}/uploads/${course.course_img}`}
+                    src={`${course.course_img}`}
                     alt=""
                     className="w-full h-full object-cover"
                   />
@@ -643,7 +643,7 @@ const CourseDetailPage = () => {
                               <img
                                 src={
                                   course.users.profilePhoto
-                                    ? `${BASE_API_URL}/uploads/${course.users.coverPhoto}`
+                                    ? `${course.users.profilePhoto}`
                                     : "/default-avatar.png"
                                 }
                                 alt={course.users.full_name}

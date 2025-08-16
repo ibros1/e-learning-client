@@ -25,7 +25,10 @@ import {
 
 import { type AppDispatch, type RootState } from "../../../store/store";
 import { createCourseFn } from "../../../store/slices/courses/createCourse";
-import { createCourseRedu } from "../../../store/slices/courses/listCourse";
+import {
+  createCourseRedu,
+  listCoursesFn,
+} from "../../../store/slices/courses/listCourse";
 
 const CreateCourseDialog = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -37,11 +40,11 @@ const CreateCourseDialog = () => {
     initialValues: {
       title: "",
       description: "",
-      course_img: null,
-      cover_img: null,
       preview_course: "",
       isPublished: false,
       price: 0,
+      course_img: null as File | null,
+      cover_img: null as File | null,
     },
     validationSchema: yup.object({
       title: yup.string().required("Course title is required").min(4),
@@ -55,29 +58,41 @@ const CreateCourseDialog = () => {
       price: yup.number().min(0, "Price must be positive"),
     }),
     onSubmit: (values) => {
-      const payload = {
-        ...values,
-        course_img: values.course_img!,
-        cover_img: values.cover_img!,
-      };
-      dispatch(createCourseFn(payload));
+      const formData = new FormData();
+
+      formData.append("title", values.title);
+      formData.append("description", values.description);
+      formData.append("price", values.price.toString());
+      formData.append("isPublished", values.isPublished.toString());
+      formData.append("preview_course", values.preview_course);
+
+      if (values.course_img) {
+        formData.append("course_img", values.course_img);
+      }
+      if (values.cover_img) {
+        formData.append("cover_img", values.cover_img); // Fixed typo here
+      }
+
+      dispatch(createCourseFn(formData));
     },
   });
 
   useEffect(() => {
-    if (loading) toast.loading("Creating course...");
+    if (loading) {
+      const toastId = toast.loading("Creating course...");
+      return () => toast.dismiss(toastId);
+    }
 
     if (error) {
-      toast.dismiss();
       toast.error(error);
     }
 
     if (data?.isSuccess) {
-      toast.dismiss();
       toast.success("Course created successfully!");
       dispatch(createCourseRedu(data.course));
       formik.resetForm();
-      window.location.reload(); // Can be replaced with refetch logic
+      // Consider using refetch logic instead of reload
+      dispatch(listCoursesFn()); // Add this if you have a listCoursesFn action
     }
   }, [loading, error, data, dispatch]);
 
@@ -115,6 +130,7 @@ const CreateCourseDialog = () => {
                 placeholder="e.g. Modern JavaScript"
                 value={formik.values.title}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               {formik.touched.title && formik.errors.title && (
                 <p className="text-sm text-red-500 mt-1">
@@ -132,8 +148,11 @@ const CreateCourseDialog = () => {
                 id="price"
                 name="price"
                 type="number"
+                min="0"
+                step="0.01"
                 value={formik.values.price}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               {formik.touched.price && formik.errors.price && (
                 <p className="text-sm text-red-500 mt-1">
@@ -155,9 +174,13 @@ const CreateCourseDialog = () => {
                 name="course_img"
                 type="file"
                 accept="image/*"
-                onChange={(e) =>
-                  formik.setFieldValue("course_img", e.currentTarget.files?.[0])
-                }
+                onChange={(e) => {
+                  formik.setFieldValue(
+                    "course_img",
+                    e.currentTarget.files?.[0] || null
+                  );
+                  formik.setFieldTouched("course_img", true);
+                }}
               />
               {formik.touched.course_img && formik.errors.course_img && (
                 <p className="text-sm text-red-500 mt-1">
@@ -176,9 +199,13 @@ const CreateCourseDialog = () => {
                 name="cover_img"
                 type="file"
                 accept="image/*"
-                onChange={(e) =>
-                  formik.setFieldValue("cover_img", e.currentTarget.files?.[0])
-                }
+                onChange={(e) => {
+                  formik.setFieldValue(
+                    "cover_img",
+                    e.currentTarget.files?.[0] || null
+                  );
+                  formik.setFieldTouched("cover_img", true);
+                }}
               />
               {formik.touched.cover_img && formik.errors.cover_img && (
                 <p className="text-sm text-red-500 mt-1">
@@ -200,6 +227,7 @@ const CreateCourseDialog = () => {
               placeholder="https://youtube.com/..."
               value={formik.values.preview_course}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
             {formik.touched.preview_course && formik.errors.preview_course && (
               <p className="text-sm text-red-500 mt-1">
@@ -218,6 +246,7 @@ const CreateCourseDialog = () => {
               placeholder="Describe the course content..."
               value={formik.values.description}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
             {formik.touched.description && formik.errors.description && (
               <p className="text-sm text-red-500 mt-1">
@@ -243,8 +272,9 @@ const CreateCourseDialog = () => {
             <Button
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full"
+              disabled={loading}
             >
-              🚀 Save Course
+              {loading ? "Creating..." : "🚀 Save Course"}
             </Button>
           </div>
         </form>

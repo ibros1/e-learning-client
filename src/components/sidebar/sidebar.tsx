@@ -4,16 +4,13 @@ import { type RootState } from "../../store/store";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { FaCheckCircle } from "react-icons/fa";
 import logo from "../../../public/logo.png";
-import { BASE_API_URL } from "../../constants/base_url";
 
 const Sidebar = () => {
   const userLogin = useSelector((state: RootState) => state.WhoAmiSlice);
   const user = userLogin.data?.user;
   const fullName = user?.full_name || "Guest User";
   const username = user?.username || "guest";
-  const profilePhoto = user?.profilePhoto
-    ? `${BASE_API_URL}/uploads/${user.profilePhoto}`
-    : "";
+  const profilePhoto = user?.profilePhoto ? `${user.profilePhoto}` : "";
   const navigate = useNavigate();
   const links = [
     {

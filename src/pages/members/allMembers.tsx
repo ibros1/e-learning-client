@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import type { AppDispatch, RootState } from "../../store/store";
 import { listUsersFn } from "../../store/slices/auth/user/getAllUsers";
-import { BASE_API_URL } from "../../constants/base_url";
 
 const MembersPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -180,7 +179,7 @@ const MembersPage = () => {
                     onClick={() => navigate(`/members/${m.id}`)}
                   >
                     <img
-                      src={`${BASE_API_URL}/uploads/${m.profilePhoto}`}
+                      src={`${m.profilePhoto}`}
                       alt={m.full_name}
                       loading="lazy"
                       className="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full object-cover ring-4 ring-white dark:ring-gray-900 shadow-md"

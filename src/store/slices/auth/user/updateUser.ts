@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type {
-  iUpdatedUserPayload,
-  iUpdatedUserResponse,
-} from "../../../../types/user";
+import type { iUpdatedUserResponse } from "../../../../types/user";
 import type { RootState } from "../../../store";
 import axios, { AxiosError } from "axios";
 import { Default_Error_Message } from "../../../../constants/default_error";
@@ -16,12 +13,12 @@ const initialState = {
 
 export const updateUserFn = createAsyncThunk(
   "/users/update",
-  async (data: iUpdatedUserPayload, { rejectWithValue, getState }) => {
+  async (formData: FormData, { rejectWithValue, getState }) => {
     try {
       const appState = getState() as RootState;
       const token = appState.loginSlice.data?.token;
 
-      const res = await axios.put(`${BASE_API_URL}/users/update`, data, {
+      const res = await axios.put(`${BASE_API_URL}/users/update`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

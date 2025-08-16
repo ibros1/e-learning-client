@@ -8,13 +8,11 @@ import {
 } from "../../components/ui/dialog";
 
 import defaultCover from "../../../assets/coverPhoto.png";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 import { getOneUserFn } from "../../store/slices/auth/user/getOneUser";
-
-const BASE_IMAGE_URL = `${BASE_API_URL}/uploads`;
 
 const GetOneMemberPage = () => {
   const { userId } = useParams();
@@ -35,13 +33,9 @@ const GetOneMemberPage = () => {
     setIsImageDialogOpen(true);
   };
 
-  const profileImageUrl = user?.profilePhoto
-    ? `${BASE_IMAGE_URL}/${user?.profilePhoto}`
-    : "";
+  const profileImageUrl = user?.profilePhoto ? `${user?.profilePhoto}` : "";
 
-  const coverImageUrl = user?.coverPhoto
-    ? `${BASE_IMAGE_URL}/${user?.coverPhoto}`
-    : defaultCover;
+  const coverImageUrl = user?.coverPhoto ? `${user?.coverPhoto}` : defaultCover;
 
   return !user ? (
     <div className="">No user found!</div>

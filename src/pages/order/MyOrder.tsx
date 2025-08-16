@@ -11,7 +11,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../../store/store";
 import { listEnrollementsFn } from "../../store/slices/enrollments/listEnrollements";
-import { BASE_API_URL } from "../../constants/base_url";
 
 const getStatusBadge = (status: string) => {
   switch (status) {
@@ -19,7 +18,7 @@ const getStatusBadge = (status: string) => {
       return (
         <span className="inline-flex items-center gap-1 text-sm font-medium px-2 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200">
           <CheckCircle className="w-4 h-4" />
-          Completed
+          Paid
         </span>
       );
     case "IN_PROGRESS":
@@ -120,7 +119,7 @@ const MyOrder = () => {
               <div className="flex items-center gap-3 mb-4">
                 {order.users?.profilePhoto ? (
                   <img
-                    src={`${BASE_API_URL}/uploads/${order.users.profilePhoto}`}
+                    src={`${order.users.profilePhoto}`}
                     alt="User"
                     className="w-10 h-10 rounded-full object-cover"
                   />

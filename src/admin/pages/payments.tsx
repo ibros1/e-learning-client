@@ -15,7 +15,7 @@ import { Input } from "../../components/ui/input";
 import { listPaymentsFn } from "../../store/slices/payments/listPayments";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import clsx from "clsx";
 import type { Payment } from "../../types/payment";
 
@@ -46,7 +46,7 @@ export const Payments = () => {
         return (
           <div className="flex items-center gap-3">
             <img
-              src={`${BASE_API_URL}/uploads/${user.profilePhoto ?? ""}`}
+              src={`${user.profilePhoto ?? ""}`}
               alt={user.full_name}
               className="w-10 h-10 rounded-full object-cover border border-gray-300"
             />

@@ -636,7 +636,7 @@ export default function HomePage() {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={`${BASE_API_URL}/uploads/${course.course_img}`}
+                    src={`${course.course_img}`}
                     alt={course.title}
                     className="w-full h-48 sm:h-56 md:h-64 object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"

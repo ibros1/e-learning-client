@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import Spinner from "../../components/spinner";
 import { Switch } from "@radix-ui/react-switch";
-import { BASE_API_URL } from "../../constants/base_url";
 
 const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ const SettingsPage: React.FC = () => {
           <div className="w-full h-28 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-700">
             {user.coverPhoto ? (
               <img
-                src={`${BASE_API_URL}/uploads/${user.coverPhoto}`}
+                src={`${user.coverPhoto}`}
                 alt="cover"
                 className="w-full h-full object-cover"
               />
@@ -46,7 +45,7 @@ const SettingsPage: React.FC = () => {
             {/* Profile photo overlaps the bottom of the cover */}
             <div className="z-10">
               <img
-                src={`${BASE_API_URL}/uploads/${user.profilePhoto}`}
+                src={`${user.profilePhoto}`}
                 alt="avatar"
                 className="absolute -mt-12 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-md"
               />

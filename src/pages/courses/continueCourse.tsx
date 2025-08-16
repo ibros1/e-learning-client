@@ -6,7 +6,6 @@ import {
   CheckCircle,
   PlayCircle,
   BookOpen,
-  Menu,
   X,
   FileText,
   ChevronLeft,
@@ -585,7 +584,7 @@ const ContinueCourse = () => {
                   <img
                     src={
                       course?.users?.profilePhoto
-                        ? `${BASE_API_URL}/uploads/${course.users.profilePhoto}`
+                        ? `${course.users.profilePhoto}`
                         : "/default-avatar.png"
                     }
                     alt="Instructor"

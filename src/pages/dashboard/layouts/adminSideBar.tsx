@@ -8,15 +8,12 @@ import {
 } from "../../../components/ui/avatar";
 import { FaCheckCircle } from "react-icons/fa";
 import logo from "../../../../public/logo.png";
-import { BASE_API_URL } from "../../../constants/base_url";
 
 const Sidebar = () => {
   const user = useSelector((state: RootState) => state.WhoAmiSlice.data?.user);
   const fullName = user?.full_name || "Guest User";
   const username = user?.username || "guest";
-  const profilePhoto = user?.profilePhoto
-    ? `${BASE_API_URL}/uploads/${user.profilePhoto}`
-    : "";
+  const profilePhoto = user?.profilePhoto ? `${user.profilePhoto}` : "";
   const navigate = useNavigate();
   const links = [
     {
@@ -50,7 +47,7 @@ const Sidebar = () => {
       filledIconClass: "bb-icon-marketplace bb-icon-f",
     },
     {
-      label: "Payments",
+      label: "Transactions",
       to: "/dashboard/payments",
       iconClass: "bb-icon-money",
       filledIconClass: "bb-icon-money bb-icon-f",
@@ -62,8 +59,8 @@ const Sidebar = () => {
       filledIconClass: "bb-icon-users bb-icon-f",
     },
     {
-      label: "Notices",
-      to: "/dashboard/notice",
+      label: "Reports",
+      to: "/dashboard/reports",
       iconClass: "bb-icon-voicemail",
       filledIconClass: "bb-icon-voicemail bb-icon-f",
     },

@@ -39,7 +39,7 @@ import { listUsersFn } from "../../../store/slices/auth/user/getAllUsers";
 import { listCoursesFn } from "../../../store/slices/courses/listCourse";
 import { listLessonsFn } from "../../../store/slices/lessons/listLessons";
 import { listChaptersFn } from "../../../store/slices/chapters/listChapters";
-import { BASE_API_URL } from "../../../constants/base_url";
+
 import type { DateRange } from "react-day-picker";
 
 // Utility: Format timestamp to "HH:MM AM/PM"
@@ -250,7 +250,7 @@ export default function AdminDashboard() {
                     title={`${user.full_name} - ${user.role}`}
                   >
                     <img
-                      src={`${BASE_API_URL}/uploads/${user.profilePhoto}`}
+                      src={`${user.profilePhoto}`}
                       alt={`${user.full_name} profile`}
                       className="w-10 h-10 rounded-full object-cover flex-shrink-0"
                       loading="lazy"

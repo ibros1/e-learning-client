@@ -3,7 +3,7 @@ import { Button } from "../../components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../../store/store";
 import { listCoursesFn } from "../../store/slices/courses/listCourse";
-import { BASE_API_URL } from "../../constants/base_url";
+
 import { Pencil, Trash2, Search } from "lucide-react";
 import {
   Dialog,
@@ -28,7 +28,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
-import type { Course, iUpdatedCoursePayload } from "../../types/course";
 import { Textarea } from "../../components/ui/textarea";
 import { Switch } from "../../components/ui/switch";
 import {
@@ -51,13 +50,13 @@ import {
   resetDeleteCourseState,
 } from "../../store/slices/courses/deleteCourse";
 import CreateCourseDialog from "../components/courses/CreateCourseDailog";
+import type { Course } from "../../types/course";
 
 const AdminCourses = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState<"ALL" | "PUBLISHED" | "UNPUBLISHED">(
     "ALL"
   );
-  const BASE_IMAGE_FORMAT = `${BASE_API_URL}/uploads`;
 
   const dispatch = useDispatch<AppDispatch>();
   const coursesState = useSelector(
@@ -137,18 +136,22 @@ const AdminCourses = () => {
     e.preventDefault();
     if (!selectedCourse) return;
 
-    const payload: iUpdatedCoursePayload = {
-      id: Number(selectedCourse.id),
-      title,
-      description: desc,
-      price,
-      preview_course,
-      isPublished: isPublished,
-      ...(course_img && { course_img }),
-      ...(cover_img && { cover_img }),
-    };
+    const formData = new FormData();
+    formData.append("id", selectedCourse.id.toString());
+    formData.append("title", title);
+    formData.append("description", desc);
+    formData.append("price", price.toString());
+    formData.append("isPublished", isPublished.toString()); // Corrected key name
+    formData.append("preview_course", preview_course);
 
-    dispatch(updateCourseFn(payload));
+    if (course_img) {
+      formData.append("course_img", course_img); // Corrected key name
+    }
+    if (cover_img) {
+      formData.append("cover_img", cover_img); // Corrected key name
+    }
+
+    dispatch(updateCourseFn(formData));
   };
   const courseId = selectedCourse?.id;
   const deleteCourseHandler = () => {
@@ -327,7 +330,7 @@ const AdminCourses = () => {
                 {/* Course Image */}
                 <td className="px-6 py-4">
                   <img
-                    src={`${BASE_IMAGE_FORMAT}/${course.course_img}`}
+                    src={`${course.course_img}`}
                     alt={course.title}
                     className="w-12 h-12 rounded-lg object-cover shadow-sm"
                   />
@@ -389,7 +392,7 @@ const AdminCourses = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-3">
                     <img
-                      src={`${BASE_IMAGE_FORMAT}/${course.users?.profilePhoto}`}
+                      src={`${course.users?.profilePhoto}`}
                       alt={course.users?.full_name}
                       className="w-10 h-10 rounded-full object-cover shadow"
                     />

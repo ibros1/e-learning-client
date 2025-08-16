@@ -43,7 +43,7 @@ const GetOneUser = () => {
     error,
   } = useSelector((state: RootState) => state.getOneUserSLice);
   const user = userData?.user;
-  const profileImageUrl = `${BASE_API_URL}/uploads/${user?.profilePhoto}`;
+  const profileImageUrl = `${user?.profilePhoto}`;
 
   const enrollments = useSelector(
     (state: RootState) => state.listEnrollementsSlice.data.enrollemnets
@@ -85,19 +85,15 @@ const GetOneUser = () => {
       {/* Cover and Profile */}
       <div className="relative rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-gray-800">
         <img
-          src={`${BASE_API_URL}/uploads/${encodeURIComponent(user.coverPhoto)}`}
+          src={`${user.coverPhoto}`}
           alt="Cover"
           className="w-full h-60 object-cover cursor-pointer"
-          onClick={() =>
-            viewImageHandler(
-              `${BASE_API_URL}/uploads/${encodeURIComponent(user.coverPhoto)}`
-            )
-          }
+          onClick={() => viewImageHandler(`${user.coverPhoto}`)}
         />
         <div className="absolute inset-0 bg-black bg-opacity-40 pointer-events-none" />
         <div className="absolute bottom-6 left-6 flex items-center gap-6">
           <img
-            src={`${BASE_API_URL}/uploads/${user.profilePhoto}`}
+            src={`${user.profilePhoto}`}
             alt={user.full_name}
             className="w-28 h-28 cursor-pointer rounded-full border-4 border-white object-cover shadow-lg"
             onClick={() => viewImageHandler(profileImageUrl)}

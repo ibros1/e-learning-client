@@ -1,38 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type {
-  iCreatedCoursePayload,
-  iCreatedUserResponse,
-} from "../../../types/course";
+import type { iCreatedCourseResponse } from "../../../types/course";
 import axios, { AxiosError } from "axios";
 import { BASE_API_URL } from "../../../constants/base_url";
 import { Default_Error_Message } from "../../../constants/default_error";
 import type { RootState } from "../../store";
 
 const initialState = {
-  data: {} as iCreatedUserResponse,
+  data: {} as iCreatedCourseResponse,
   loading: false,
   error: "",
 };
 
 export const createCourseFn = createAsyncThunk(
   "/courses/create",
-  async (data: iCreatedCoursePayload, { rejectWithValue, getState }) => {
+  async (formData: FormData, { rejectWithValue, getState }) => {
     try {
-      const formData = new FormData();
-
-      formData.append("title", data.title);
-      formData.append("description", data.description);
-      formData.append("price", data.price.toString());
-      formData.append("preview_course", data.preview_course);
-      formData.append("isPublished", data.isPublished.toString());
-      formData.append("course_img", data.course_img);
-      formData.append("cover_img", data.cover_img);
-
       const appState = getState() as RootState;
       const token = appState.loginSlice.data.token;
       const response = await axios.post(
         `${BASE_API_URL}/courses/create`,
-        data,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -60,7 +47,7 @@ export const createCourseSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createCourseFn.pending, (state) => {
       state.loading = true;
-      state.data = {} as iCreatedUserResponse;
+      state.data = {} as iCreatedCourseResponse;
       state.error = "";
     });
     builder.addCase(createCourseFn.fulfilled, (state, action) => {
@@ -69,7 +56,7 @@ export const createCourseSlice = createSlice({
       state.error = "";
     });
     builder.addCase(createCourseFn.rejected, (state, action) => {
-      state.data = {} as iCreatedUserResponse;
+      state.data = {} as iCreatedCourseResponse;
       state.loading = false;
       state.error = action.payload as string;
     });

@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { type RootState } from "../../store/store";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import logo from "../../../public/logo.png";
-import { BASE_API_URL } from "../../constants/base_url";
 import { FaCheckCircle } from "react-icons/fa";
 
 interface Props {
@@ -15,9 +14,7 @@ const MobileSidebar = ({ onClose }: Props) => {
   const user = userState.data?.user;
   const fullName = user?.full_name || "Guest User";
   const username = user?.username || "guest";
-  const profilePhoto = user?.profilePhoto
-    ? `${BASE_API_URL}/uploads/${user.profilePhoto}`
-    : "";
+  const profilePhoto = user?.profilePhoto ? `${user.profilePhoto}` : "";
 
   const isLoggedIn = userState.data?.isSuccess;
 
